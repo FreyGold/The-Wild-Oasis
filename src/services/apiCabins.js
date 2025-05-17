@@ -61,3 +61,33 @@ export async function addEditCabin(formData, id = null) {
    console.log(`${id ? "edited" : "created"} cabin`, data);
    return 0;
 }
+export async function duplicateCabin(id) {
+   let query = supabase.from("cabins");
+
+   const { data: cabin, error: selectError } = await query
+      .select("*")
+      .eq("id", id)
+      .single();
+
+   if (selectError) {
+      console.error(selectError);
+      throw new Error(`Cabin could not be duplicate`);
+   }
+
+   const { id: _, ...cabinWithoutId } = cabin;
+   const { data, error } = await query
+      .insert([
+         {
+            ...cabinWithoutId,
+         },
+      ])
+      .select();
+
+   if (error) {
+      console.error(error);
+      throw new Error(`Cabin could not be duplicate`);
+   }
+
+   console.log(`duplicated cabin`, data);
+   return 0;
+}

@@ -19,7 +19,6 @@ function CreateCabinForm({ cabinToEdit = {} }) {
    const { register, handleSubmit, reset, getValues, formState } = useForm({
       defaultValues: isEditSession ? editValues : {},
    });
-   const queryClient = useQueryClient();
    const { errors } = formState;
    const { isAdding, addCabin } = useCreateCabin(reset);
    const { isEditing, editCabin } = useEditCabin();
@@ -27,7 +26,10 @@ function CreateCabinForm({ cabinToEdit = {} }) {
    function onSubmit(data) {
       const image = typeof data.image === "string" ? data.image : data.image[0];
       if (isEditSession)
-         editCabin({ newFormData: { ...data, id: editId }, id: editId });
+         editCabin({
+            newFormData: { ...data, id: editId, image: image },
+            id: editId,
+         });
       else addCabin({ ...data, image: image });
    }
    function onError() {

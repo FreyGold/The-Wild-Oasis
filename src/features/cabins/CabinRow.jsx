@@ -7,6 +7,8 @@ import Button from "../../ui/Button";
 import { useState } from "react";
 import CreateCabinForm from "./CreateCabinForm";
 import { useDeleteCabin } from "./useDeleteCabin";
+import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
+import { useDuplicateCabin } from "./useDuplicateCabin";
 
 const TableRow = styled.div`
    display: grid;
@@ -58,6 +60,7 @@ function CabinRow({ cabin }) {
       discount,
    } = cabin;
    const { isDeleting, deleteCabin } = useDeleteCabin();
+   const { isDuplicating, duplicateCabin } = useDuplicateCabin();
    return (
       <>
          <TableRow role="row">
@@ -73,15 +76,18 @@ function CabinRow({ cabin }) {
             <div
                style={{ display: "flex", gap: "3px", boxSizing: "border-box" }}>
                <Button
-                  variation="primary"
-                  onClick={() => setOpenForm((openForm) => !openForm)}>
-                  Edit
+                  disabled={isDuplicating}
+                  onClick={() => duplicateCabin(cabinId)}>
+                  <HiSquare2Stack />
+               </Button>
+               <Button onClick={() => setOpenForm((openForm) => !openForm)}>
+                  <HiPencil />
                </Button>
                <Button
                   variation="danger"
                   onClick={() => deleteCabin(cabinId)}
                   disabled={isDeleting}>
-                  Delete
+                  <HiTrash />
                </Button>
             </div>
          </TableRow>
