@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import Button from "../../ui/Button";
 import { useState } from "react";
 import CreateCabinForm from "./CreateCabinForm";
+import { useDeleteCabin } from "./useDeleteCabin";
 
 const TableRow = styled.div`
    display: grid;
@@ -56,19 +57,7 @@ function CabinRow({ cabin }) {
       regularPrice,
       discount,
    } = cabin;
-   const queryClient = useQueryClient();
-   const { isLoading: isDeleting, mutate } = useMutation({
-      mutationFn: deleteCabin,
-      onSuccess: () => {
-         queryClient.invalidateQueries({
-            queryKey: ["cabin"],
-         });
-         toast.success("Cabin Successfully deleted");
-      },
-      onError: (err) => {
-         toast.error(err.message);
-      },
-   });
+   const { isDeleting, deleteCabin } = useDeleteCabin();
    return (
       <>
          <TableRow role="row">
@@ -90,7 +79,7 @@ function CabinRow({ cabin }) {
                </Button>
                <Button
                   variation="danger"
-                  onClick={() => mutate(cabinId)}
+                  onClick={() => deleteCabin(cabinId)}
                   disabled={isDeleting}>
                   Delete
                </Button>
