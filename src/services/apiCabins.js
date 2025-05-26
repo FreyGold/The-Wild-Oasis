@@ -26,7 +26,6 @@ export async function addEditCabin(formData, id = null) {
       ? formData.image
       : `https://zwnpinbeyaqhrmbeghcw.supabase.co/storage/v1/object/public/cabin-images/${newImage}`;
    let query = supabase.from("cabins");
-
    if (!id) {
       query = query.insert([
          {
