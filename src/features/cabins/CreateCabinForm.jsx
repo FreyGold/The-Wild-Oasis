@@ -13,7 +13,7 @@ import FormRow from "../../ui/FormRow";
 import { useCreateCabin } from "./useCreateCabin";
 import { useEditCabin } from "./useEditCabin";
 
-function CreateCabinForm({ cabinToEdit = {} }) {
+function CreateCabinForm({ cabinToEdit = {}, onClose }) {
    const { id: editId, ...editValues } = cabinToEdit;
    const isEditSession = Boolean(editId);
    const { register, handleSubmit, reset, getValues, formState } = useForm({
@@ -30,13 +30,24 @@ function CreateCabinForm({ cabinToEdit = {} }) {
             newFormData: { ...data, id: editId, image: image },
             id: editId,
          });
-      else addCabin({ ...data, image: image });
+      else
+         addCabin(
+            { ...data, image: image },
+            {
+               onSuccess: () => {
+                  reset();
+                  onClose?.();
+               },
+            }
+         );
    }
    function onError() {
       console.log(errors);
    }
    return (
-      <Form onSubmit={handleSubmit(onSubmit, onError)}>
+      <Form
+         onSubmit={handleSubmit(onSubmit, onError)}
+         type={onClose ? "modal" : "regular"}>
          <FormRow label="Cabin Name" error={errors?.name?.message}>
             <Input
                type="text"
@@ -119,7 +130,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
 
          <FormRow>
             <Button variation="secondary" type="reset">
-               Cancel
+               Reset
             </Button>
             <Button disabled={isWorking}>
                {isEditSession ? "Edit Cabin" : "Add Cabin"}
