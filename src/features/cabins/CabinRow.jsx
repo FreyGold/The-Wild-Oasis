@@ -9,6 +9,8 @@ import CreateCabinForm from "./CreateCabinForm";
 import { useDeleteCabin } from "./useDeleteCabin";
 import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
 import { useDuplicateCabin } from "./useDuplicateCabin";
+import Modal from "../../ui/Modal";
+import Row from "../../ui/Row";
 
 const TableRow = styled.div`
    display: grid;
@@ -80,15 +82,47 @@ function CabinRow({ cabin }) {
                   onClick={() => duplicateCabin(cabinId)}>
                   <HiSquare2Stack />
                </Button>
-               <Button onClick={() => setOpenForm((openForm) => !openForm)}>
+
+               <Modal>
+                  <Modal.OpenModal opens="cabin-edit">
+                     <Button>
+                        <HiPencil />
+                     </Button>
+                  </Modal.OpenModal>
+                  <Modal.Window name="cabin-edit">
+                     <CreateCabinForm />
+                  </Modal.Window>
+               </Modal>
+
+               {/* <Button onClick={() => setOpenForm((openForm) => !openForm)}>
                   <HiPencil />
-               </Button>
-               <Button
+               </Button> */}
+
+               <Modal>
+                  <Modal.OpenModal opens="cabin-delete">
+                     <Button variation="danger">
+                        <HiTrash />
+                     </Button>
+                  </Modal.OpenModal>
+                  <Modal.Window name="cabin-delete">
+                     <Row>
+                        <div>Are you sure you want to delete this cabin?</div>
+                        <Button
+                           variation="danger"
+                           onClick={() => deleteCabin(cabinId)}
+                           disabled={isDeleting}>
+                           Yes
+                        </Button>
+                     </Row>
+                  </Modal.Window>
+               </Modal>
+
+               {/* <Button
                   variation="danger"
                   onClick={() => deleteCabin(cabinId)}
                   disabled={isDeleting}>
                   <HiTrash />
-               </Button>
+               </Button> */}
             </div>
          </TableRow>
          {openForm && <CreateCabinForm cabinToEdit={cabin}></CreateCabinForm>}
