@@ -129,8 +129,8 @@ function CreateCabinForm({ cabinToEdit = {}, onClose }) {
          </FormRow>
 
          <FormRow>
-            <Button variation="secondary" type="reset">
-               Reset
+            <Button variation="secondary" type="reset" onClick={onClose}>
+               Cancel
             </Button>
             <Button disabled={isWorking}>
                {isEditSession ? "Edit Cabin" : "Add Cabin"}
