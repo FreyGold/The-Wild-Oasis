@@ -65,68 +65,39 @@ function CabinRow({ cabin }) {
             <span>&mdash;</span>
          )}
          <div style={{ display: "flex", gap: "3px", boxSizing: "border-box" }}>
-            <Button
-               disabled={isDuplicating}
-               onClick={() => duplicateCabin(cabinId)}>
-               <HiSquare2Stack />
-            </Button>
-
             <Modal>
-               <Modal.OpenModal opens="cabin-edit">
-                  <Button>
-                     <HiPencil />
-                  </Button>
-               </Modal.OpenModal>
+               <Menus.Menu>
+                  <Menus.Toggle id={cabinId} />
+
+                  <Menus.List id={cabinId}>
+                     <Menus.Button
+                        icon={<HiSquare2Stack />}
+                        onClick={() => duplicateCabin(cabinId)}
+                        disabled={isDuplicating}>
+                        Duplicate
+                     </Menus.Button>
+
+                     <Modal.OpenModal opens="cabin-edit">
+                        <Menus.Button icon={<HiPencil />}>Edit</Menus.Button>
+                     </Modal.OpenModal>
+
+                     <Modal.OpenModal opens="cabin-delete">
+                        <Menus.Button icon={<HiTrash />}>Delete</Menus.Button>
+                     </Modal.OpenModal>
+                  </Menus.List>
+               </Menus.Menu>
                <Modal.Window name="cabin-edit">
                   <CreateCabinForm />
                </Modal.Window>
-            </Modal>
 
-            {/* <Button onClick={() => setOpenForm((openForm) => !openForm)}>
-                  <HiPencil />
-               </Button> */}
-
-            <Modal>
-               <Modal.OpenModal opens="cabin-delete">
-                  <Button variation="danger">
-                     <HiTrash />
-                  </Button>
-               </Modal.OpenModal>
                <Modal.Window name="cabin-delete">
                   <ConfirmDelete
                      resourceName="cabins"
                      disabled={isDeleting}
                      onConfirm={() => deleteCabin(cabinId)}
                   />
-
-                  {/* <Row>
-                        <div>Are you sure you want to delete this cabin?</div>
-                        <Button
-                           variation="danger"
-                           onClick={() => deleteCabin(cabinId)}
-                           disabled={isDeleting}>
-                           Yes
-                        </Button>
-                     </Row> */}
                </Modal.Window>
             </Modal>
-
-            {/* <Button
-                  variation="danger"
-                  onClick={() => deleteCabin(cabinId)}
-                  disabled={isDeleting}>
-                  <HiTrash />
-               </Button> */}
-
-            {/* <Menus.Menu>
-               <Menus.Toggle id={cabinId} />
-
-               <Menus.List id={cabinId}>
-                  <Menus.Button>Duplicate</Menus.Button>
-                  <Menus.Button>Create</Menus.Button>
-                  <Menus.Button>Delete</Menus.Button>
-               </Menus.List>
-            </Menus.Menu> */}
          </div>
       </Table.Row>
    );
