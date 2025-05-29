@@ -1,9 +1,6 @@
 import styled from "styled-components";
 import { formatCurrency } from "../../utils/helpers";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteCabin } from "../../services/apiCabins";
-import toast from "react-hot-toast";
-import Button from "../../ui/Button";
 import { useState } from "react";
 import CreateCabinForm from "./CreateCabinForm";
 import { useDeleteCabin } from "./useDeleteCabin";
@@ -42,7 +39,6 @@ const Discount = styled.div`
 `;
 
 function CabinRow({ cabin }) {
-   const [openForm, setOpenForm] = useState(false);
    const {
       id: cabinId,
       name,
@@ -87,7 +83,7 @@ function CabinRow({ cabin }) {
                   </Menus.List>
                </Menus.Menu>
                <Modal.Window name="cabin-edit">
-                  <CreateCabinForm />
+                  <CreateCabinForm cabinToEdit={cabin} />
                </Modal.Window>
 
                <Modal.Window name="cabin-delete">

@@ -42,7 +42,7 @@ const Discount = styled.div`
 `;
 
 function CabinRow({ cabin }) {
-   const [openForm, setOpenForm] = useState(false);
+   console.log(cabin);
    const {
       id: cabinId,
       name,
@@ -78,14 +78,9 @@ function CabinRow({ cabin }) {
                   </Button>
                </Modal.OpenModal>
                <Modal.Window name="cabin-edit">
-                  <CreateCabinForm />
+                  <CreateCabinForm cabinToEdit={cabin} />
                </Modal.Window>
             </Modal>
-
-            {/* <Button onClick={() => setOpenForm((openForm) => !openForm)}>
-                  <HiPencil />
-               </Button> */}
-
             <Modal>
                <Modal.OpenModal opens="cabin-delete">
                   <Button variation="danger">
@@ -98,35 +93,8 @@ function CabinRow({ cabin }) {
                      disabled={isDeleting}
                      onConfirm={() => deleteCabin(cabinId)}
                   />
-
-                  {/* <Row>
-                        <div>Are you sure you want to delete this cabin?</div>
-                        <Button
-                           variation="danger"
-                           onClick={() => deleteCabin(cabinId)}
-                           disabled={isDeleting}>
-                           Yes
-                        </Button>
-                     </Row> */}
                </Modal.Window>
             </Modal>
-
-            {/* <Button
-                  variation="danger"
-                  onClick={() => deleteCabin(cabinId)}
-                  disabled={isDeleting}>
-                  <HiTrash />
-               </Button> */}
-
-            {/* <Menus.Menu>
-               <Menus.Toggle id={cabinId} />
-
-               <Menus.List id={cabinId}>
-                  <Menus.Button>Duplicate</Menus.Button>
-                  <Menus.Button>Create</Menus.Button>
-                  <Menus.Button>Delete</Menus.Button>
-               </Menus.List>
-            </Menus.Menu> */}
          </div>
       </Table.Row>
    );
