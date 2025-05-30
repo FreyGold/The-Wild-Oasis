@@ -90,6 +90,7 @@ function Row({ children }) {
 }
 
 function Body({ data, render }) {
+   console.log(data);
    if (!data.length)
       return <Empty> No Data to show at the right moment. </Empty>;
    return <StyledBody>{data.map(render)}</StyledBody>;
