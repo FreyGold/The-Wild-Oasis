@@ -27,9 +27,9 @@ function BookingTableOperations() {
                },
                {
                   value: "totalPrice-desc",
-                  label: "Sort by amount (high first)",
+                  label: "Sort by price (high first)",
                },
-               { value: "totalPrice-asc", label: "Sort by amount (low first)" },
+               { value: "totalPrice-asc", label: "Sort by price (low first)" },
             ]}
          />
       </TableOperations>
